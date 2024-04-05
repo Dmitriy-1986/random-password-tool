@@ -25,6 +25,7 @@
             max-width: 1000px;
             min-height: 100%;
             margin: auto;
+            padding: 10px;
         }
 
         .generate-password-box {
@@ -32,7 +33,7 @@
             align-items: center;
             justify-content: center;
             flex-direction: column;
-            height: 100vh;
+            height: 80vh;
         }
 
         .title {
@@ -100,6 +101,19 @@
             margin-top: 10px;
             width: 100%;
         }
+
+        @media (max-width: 500px) {
+            input[type=text] {
+                width: 100%;
+            }
+
+            .btn-reload,
+            .btn-copy {
+                width: 100%;
+                margin-left: 0;
+                margin-top: 10px;
+            }
+        }
     </style>
 
 </head>
@@ -162,7 +176,7 @@
 
         // Отримуємо посилання на кнопку "Оновити пароль"
         const btnReloadPassword = document.querySelector('#btnReloadPassword');
-        
+
         // Функція для оновлення пароля
         function updatePassword() {
             generatePasswordInput.value = generatePassword();
