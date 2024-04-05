@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Генератор паролів</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: sans-serif;
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            background: #1D1B26;
+        }
+
+        .container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            max-width: 1000px;
+            min-height: 100%;
+            margin: auto;
+        }
+
+        .generate-password-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .title {
+            text-align: center;
+            margin-bottom: 30px;
+            color: white;
+        }
+
+        input[type=text] {
+            padding: 10px;
+            font-size: 20px;
+        }
+
+        .btn-reload,
+        .btn-copy {
+            padding: 10px;
+            font-size: 20px;
+
+            background: rgba(255, 255, 255, 0);
+            text-decoration: none;
+            color: white;
+            display: inline-block;
+            position: relative;
+            border: 1px solid;
+            border-image: linear-gradient(180deg, #ff3000, #ed0200, #ff096c, #d50082);
+            border-image-slice: 1;
+            font-family: 'Montserrat', sans-serif;
+            text-transform: uppercase;
+            overflow: hidden;
+            letter-spacing: 2px;
+            transition: .8s cubic-bezier(.165, .84, .44, 1);
+        }
+
+        .btn-reload:before,
+        .btn-copy:before {
+            content: "";
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 0;
+            width: 100%;
+            z-index: -1;
+            color: white;
+            background: linear-gradient(180deg, #ff3000, #ed0200, #ff096c, #d50082);
+            transition: .8s cubic-bezier(.165, .84, .44, 1);
+        }
+
+        .btn-reload:hover,
+        .btn-copy:hover {
+            background: rgba(255, 255, 255, 0);
+        }
+
+        .btn-reload:hover:before,
+        .btn-copy:hover:before {
+            bottom: 0%;
+            top: auto;
+            height: 100%;
+        }
+
+        .btn-reload {
+            margin-left: 6px;
+        }
+
+        .btn-copy {
+            margin-top: 10px;
+            width: 100%;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="container">
+        <div class="generate-password-box">
+
+            <div class="title">
+                <h1>Генератор паролів </h1>
+                <h3>для військовослужбовців</h3>
+            </div>
+
+            <div>
+                <div>
+                    <input type="text" id="generatePasswordInput">
+                    <button id="btnReloadPassword" class="btn-reload">Оновити</button>
+                </div>
+                <div>
+                    <button id="btnCopyPassword" class="btn-copy">Копіювати</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        /**
+         * Функція для генерації випадкового пароля.
+         */
+        function generatePassword() {
+            const lengthPassword = 18;
+            const charsetPassword = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789~`!@#$%^&*()_-+';
+            let retVal = '';
+
+            // Цикл для створення пароля заданої довжини
+            for (let i = 0; i < lengthPassword; ++i) {
+                const randomIndex = Math.floor(Math.random() * charsetPassword.length);
+                retVal += charsetPassword.charAt(randomIndex);
+            }
+
+            return retVal; // Повертаємо згенерований пароль
+        }
+
+        // Отримуємо посилання на поле введення пароля
+        const generatePasswordInput = document.querySelector('#generatePasswordInput');
+
+        // Заповнюємо поле введення згенерованим паролем
+        generatePasswordInput.value = generatePassword();
+
+        // Отримуємо посилання на кнопку "Копіювати пароль"     
+        const btnCopyPassword = document.querySelector('#btnCopyPassword');
+
+        // Додаємо обробник події "клік" до кнопки "Копіювати пароль"
+        btnCopyPassword.addEventListener('click', () => {
+            generatePasswordInput.select();
+            generatePasswordInput.setSelectionRange(0, 99999);
+            navigator.clipboard.writeText(generatePasswordInput.value);
+        })
+
+        // Отримуємо посилання на кнопку "Оновити пароль"
+        const btnReloadPassword = document.querySelector('#btnReloadPassword');
+        
+        // Функція для оновлення пароля
+        function updatePassword() {
+            generatePasswordInput.value = generatePassword();
+        }
+
+        // Додаємо обробник події "клік" до кнопки "Оновити пароль"
+        btnReloadPassword.addEventListener('click', updatePassword);
+    </script>
+</body>
+
+</html>
